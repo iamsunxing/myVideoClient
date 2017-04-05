@@ -18,9 +18,9 @@ namespace tmp
         public Thread myThread=null;
         public SocketCom sc = null;
       //   public string host = "192.168.1.103";//寝室时
-        public string host = "192.168.1.2"; //曾宪梓楼时
+        public string host; //曾宪梓楼时
         //public string host = "127.0.0.1";   //
-        public int port = 10001;
+        public int port;
         public Image im;
         public MemoryStream ms;
         public Form1()
@@ -30,24 +30,46 @@ namespace tmp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            myThread = new Thread(new ThreadStart(WorkerThread));
-            myThread.Start(); 
-        }
+            comboBox1.Items.Add("192.168.1.103");
+            comboBox1.Items.Add("192.168.1.2");
+            comboBox1.Items.Add("127.0.0.1");
+            comboBox1.Text = comboBox1.Items[1].ToString();
+            comboBox2.Items.Add("10001");
+            comboBox2.Text = comboBox2.Items[0].ToString();
 
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                host = comboBox1.Text;
+                port = Int32.Parse(comboBox2.Text);
+            }
+            catch(Exception ex)
+            {
+                richTextBox1.Text = ex.Message + ex.StackTrace;
+                return;
+            }
+
+            myThread = new Thread(new ThreadStart(WorkerThread));
+            myThread.Start();
+        }
         private void WorkerThread()
         {
-         //   int i = 0;
-            sc = new SocketCom(host,port);
-            if (sc == null)
+            try
             {
-                MessageBox.Show("new SocketCom(host,port) failed.");
+
+                sc = new SocketCom(host, port);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + ex.StackTrace);
                 return;
             }
             Imagedata imd;
             while (true)
             { 
                 Thread.Sleep(200);
-               
                 try
                 {
                     imd=sc.getstrdata();
@@ -59,8 +81,7 @@ namespace tmp
                 {
                     //MessageBox.Show(ex.Message+"\n"+ex.StackTrace);
                     this.richTextBox1.Text = ex.Message + ex.StackTrace;
-                }
-               
+                }  
             }
         }
         
@@ -140,5 +161,7 @@ namespace tmp
                 myThread.Abort();
             }
         }
+
+
     }
 }

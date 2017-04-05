@@ -35,7 +35,6 @@ namespace multithreadservTest
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message+ex.StackTrace);
-                flag = false;
             }
             if (flag)
             {
