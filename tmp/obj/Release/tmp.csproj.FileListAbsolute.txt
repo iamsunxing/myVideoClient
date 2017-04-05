@@ -1,0 +1,9 @@
+E:\Desktop\tmp\tmp\tmp\bin\Release\tmp.exe.config
+E:\Desktop\tmp\tmp\tmp\bin\Release\tmp.exe
+E:\Desktop\tmp\tmp\tmp\bin\Release\tmp.pdb
+E:\Desktop\tmp\tmp\tmp\obj\Release\tmp.Form1.resources
+E:\Desktop\tmp\tmp\tmp\obj\Release\tmp.Properties.Resources.resources
+E:\Desktop\tmp\tmp\tmp\obj\Release\tmp.csproj.GenerateResource.Cache
+E:\Desktop\tmp\tmp\tmp\obj\Release\tmp.exe
+E:\Desktop\tmp\tmp\tmp\obj\Release\tmp.pdb
+E:\Desktop\tmp\tmp\tmp\obj\Release\tmp.csprojResolveAssemblyReference.cache

@@ -1,0 +1,11 @@
+E:\Desktop\tmp\tmp\tmp\bin\Debug\tmp.exe.config
+E:\Desktop\tmp\tmp\tmp\bin\Debug\tmp.exe
+E:\Desktop\tmp\tmp\tmp\bin\Debug\tmp.pdb
+E:\Desktop\tmp\tmp\tmp\obj\Debug\tmp.Form1.resources
+E:\Desktop\tmp\tmp\tmp\obj\Debug\tmp.Properties.Resources.resources
+E:\Desktop\tmp\tmp\tmp\obj\Debug\tmp.csproj.GenerateResource.Cache
+E:\Desktop\tmp\tmp\tmp\obj\Debug\tmp.exe
+E:\Desktop\tmp\tmp\tmp\obj\Debug\tmp.pdb
+E:\Documents\myVideoCient\tmp\bin\Debug\tmp.exe.config
+E:\Documents\myVideoCient\tmp\obj\Debug\tmp.exe
+E:\Documents\myVideoCient\tmp\obj\Debug\tmp.pdb
