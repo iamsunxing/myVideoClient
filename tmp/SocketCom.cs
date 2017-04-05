@@ -137,7 +137,6 @@ namespace multithreadservTest
         public Imagedata imagedata;
         public Byte[] bytes;
         public int imagesize;
-    //    public int constatus = 0;//连接状态
         public int getflag = 0;
         public ClientThread(Socket clientsocket)
         {
@@ -166,25 +165,24 @@ namespace multithreadservTest
                         {
                             //  service.Send(System.Text.Encoding.ASCII.GetBytes("start"));
                             service.Receive(bytes, 4, SocketFlags.None);//number of frame
+                            imagedata.imagenum = BitConverter.ToInt32(bytes, 0); 
                             service.Receive(bytes, 4, SocketFlags.None);//size
-                            imagesize = BitConverter.ToInt32(bytes, 0);  // the size of frame
+                            imagedata.imagesize = BitConverter.ToInt32(bytes, 0);  // the size of frame
                             Thread.Sleep(5);
                             service.Receive(bytes, imagesize, SocketFlags.None);// the frame
                             MessageBox.Show(bytes[0].ToString()+" "+bytes[1].ToString()+" "+bytes[2].ToString());
 
                             imagedata.bytes = bytes;
-                            imagedata.imagesize = imagesize;
                             getflag = 1;
                         }
                     }
-                   // Thread.Sleep(10);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + ex.StackTrace);
-            }
-            service.Close();  //关闭套接字 
+                service.Close();  //关闭套接字 
+            }    
         }
     }
    
@@ -192,7 +190,7 @@ namespace multithreadservTest
     {
         public byte[] bytes;
         public int imagesize;
-        public int status;
+        public int imagenum;
         public Imagedata(byte[] bytes, int imagesize)
         {
             this.bytes = bytes;

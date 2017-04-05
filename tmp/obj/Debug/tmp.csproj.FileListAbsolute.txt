@@ -17,4 +17,3 @@ E:\Documents\documents\GitHub\myVideoClient\tmp\obj\Debug\tmp.Properties.Resourc
 E:\Documents\documents\GitHub\myVideoClient\tmp\obj\Debug\tmp.csproj.GenerateResource.Cache
 E:\Documents\documents\GitHub\myVideoClient\tmp\bin\Debug\tmp.exe
 E:\Documents\documents\GitHub\myVideoClient\tmp\bin\Debug\tmp.pdb
-E:\Documents\documents\GitHub\myVideoClient\tmp\obj\Debug\tmp.csprojResolveAssemblyReference.cache

@@ -58,7 +58,6 @@ namespace tmp
         {
             try
             {
-
                 sc = new SocketCom(host, port);
             }
             catch (Exception ex)
@@ -70,24 +69,25 @@ namespace tmp
             while (true)
             { 
                 Thread.Sleep(200);
-                try
-                {
+              //  try
+            //    {
                     imd=sc.getstrdata();
                     if (imd != null)
-                    ShowProgress(imd.bytes, imd.imagesize);
+                    {
+                        ShowProgress(imd); 
+                    }
                     sc.setgetflag(0);
-                }
-                catch (Exception ex)
-                {
-                    //MessageBox.Show(ex.Message+"\n"+ex.StackTrace);
-                    this.richTextBox1.Text = ex.Message + ex.StackTrace;
-                }  
+             //   }
+              //  catch (Exception ex)
+              //  {
+              //      MessageBox.Show(ex.Message + ex.StackTrace);
+              //  }  
             }
         }
         
-        public void ShowProgress(Byte[] msg, int imagesize)
+        public void ShowProgress(Imagedata imda)
         {
-            System.EventArgs e = new MyProgressEvents(msg, imagesize);
+            System.EventArgs e = new MyProgressEvents(imda);
             object[] pList = { this, e };
 
             BeginInvoke(new MyProgressEventsHandler(UpdateUI), pList);
@@ -97,15 +97,16 @@ namespace tmp
        
         private void UpdateUI(object sender, MyProgressEvents e)
         {
-            if (null == e.Msg) return;
-            label2.Text = e.imagesize.ToString();
+            if (null == e.im.bytes) return;
+            label2.Text = e.im.imagesize.ToString();
+            label6.Text = e.im.imagenum.ToString();
             try
             {
-                BytesToImage(e.Msg,e.imagesize);
+                BytesToImage(e.im.bytes, e.im.imagesize);
                 if (null == im) return;
                 
                 pictureBox1.BackgroundImage = im;
-               // im.Dispose();
+                im = null;
             }catch(Exception ex)
             {
                 this.richTextBox1.Text = ex.Message + ex.StackTrace;
@@ -143,25 +144,23 @@ namespace tmp
         
         public class MyProgressEvents : EventArgs
         {
-            public Byte[] Msg=null;
-            public int imagesize = 0;
-            public MyProgressEvents(Byte[] msg, int per)
+            public Imagedata im;
+            public MyProgressEvents(Imagedata imd)
             {
-                Msg = msg;
-                imagesize = per;
+                im=imd;
             }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(sc != null)
+            if (sc != null)
+            {
                 sc.Dispose();
+            }
             if (myThread != null)
             {
                 myThread.Abort();
             }
         }
-
-
     }
 }
