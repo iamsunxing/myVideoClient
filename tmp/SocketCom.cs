@@ -13,8 +13,8 @@ namespace multithreadservTest
 {
     public class SocketCom
     {
-        public Socket server;
-        public createSocketThreads cst;
+        public Socket server=null;
+        public createSocketThreads cst=null;
 
         public SocketCom(string host, int port)
         {
@@ -22,11 +22,24 @@ namespace multithreadservTest
             IPAddress local = IPAddress.Parse(host);
             IPEndPoint iep = new IPEndPoint(local, port);
             server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            server.Bind(iep);  //将套接字与本地终结点绑定
-            server.Listen(20);
-            server.ReceiveBufferSize = 640*480*3+54;
-            cst = new createSocketThreads(server);
-            new Thread(new ThreadStart(cst.createSocketThread)).Start();
+            bool flag = false;
+            try
+            {
+                server.Bind(iep);  //将套接字与本地终结点绑定
+                flag = true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                flag = false;
+            }
+            if (flag)
+            {
+                server.Listen(20);
+                server.ReceiveBufferSize = 640 * 480 * 3 + 54;
+                cst = new createSocketThreads(server);
+                new Thread(new ThreadStart(cst.createSocketThread)).Start();
+            }
         }
  
         public Imagedata getstrdata()

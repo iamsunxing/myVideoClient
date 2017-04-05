@@ -36,11 +36,11 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -81,7 +81,6 @@
             this.richTextBox1.Size = new System.Drawing.Size(515, 111);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = "";
-         //   this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // label3
             // 
@@ -91,7 +90,6 @@
             this.label3.Size = new System.Drawing.Size(89, 12);
             this.label3.TabIndex = 4;
             this.label3.Text = "打印调试信息：";
-         //   this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // tabControl1
             // 
@@ -120,6 +118,7 @@
             this.tabPage1.Size = new System.Drawing.Size(531, 366);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "主面板";
+       //     this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // groupBox1
             // 
@@ -136,21 +135,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "网络配置";
             // 
-            // textBox1
+            // button1
             // 
-            this.textBox1.Location = new System.Drawing.Point(59, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(131, 21);
-            this.textBox1.TabIndex = 0;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(2, 23);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "IP地址：";
+            this.button1.Location = new System.Drawing.Point(70, 83);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "开始监听";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -168,14 +160,21 @@
             this.textBox2.Size = new System.Drawing.Size(131, 21);
             this.textBox2.TabIndex = 2;
             // 
-            // button1
+            // label4
             // 
-            this.button1.Location = new System.Drawing.Point(70, 83);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "开始监听";
-            this.button1.UseVisualStyleBackColor = true;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(2, 23);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "IP地址：";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(59, 20);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(131, 21);
+            this.textBox1.TabIndex = 0;
             // 
             // Form1
             // 
