@@ -13,8 +13,11 @@ namespace multithreadservTest
 {
     public class SocketCom
     {
-        public Socket server=null;
-        public createSocketThreads cst=null;
+        public Socket server;
+        
+        public createSocketThreads cst;
+
+        Thread tmpThread;
 
         public SocketCom(string host, int port)
         {
@@ -26,11 +29,12 @@ namespace multithreadservTest
             try
             {
                 server.Bind(iep);  //将套接字与本地终结点绑定
+                //server.
                 flag = true;
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message+ex.StackTrace);
                 flag = false;
             }
             if (flag)
@@ -38,7 +42,8 @@ namespace multithreadservTest
                 server.Listen(20);
                 server.ReceiveBufferSize = 640 * 480 * 3 + 54;
                 cst = new createSocketThreads(server);
-                new Thread(new ThreadStart(cst.createSocketThread)).Start();
+                tmpThread = new Thread(new ThreadStart(cst.createSocketThread));
+                tmpThread.Start();
             }
         }
  
@@ -49,30 +54,55 @@ namespace multithreadservTest
             else
                 return null;
         }
+        
         public void setgetflag(int flag)
         {
             if (cst != null)
                 cst.setgetflag(flag);
+        }
+
+        public void Dispose()
+        { 
+            if(cst != null)
+                cst.Dispose();
+            //Thread.Sleep(1);
+            if (tmpThread != null)
+                tmpThread.Abort();
+            if (server != null)
+                server.Close();
+
         }
     }
 
     public class createSocketThreads
     {
         public Socket server;
+        
         ClientThread newclient;
+
+        Thread thread;
+
         public createSocketThreads(Socket myserver)
         {
             this.server = myserver;
         }
+       
         public void createSocketThread()
         {
-            while (true)
+         //   while (true)
+            try
             {
                 Socket client = server.Accept(); //得到包含客户端信息的套接字            
                 newclient = new ClientThread(client);  //创建消息服务线程对象       
-                new Thread(new ThreadStart(newclient.ClientService)).Start();//把ClientThread类的ClientService方法委托给线程 
+                thread = new Thread(new ThreadStart(newclient.ClientService));
+                thread.Start();//把ClientThread类的ClientService方法委托给线程 
+            }
+            catch 
+            {
+                 //  MessageBox.Show(ex.Message + ex.StackTrace);
             }
         }
+       
         public Imagedata getstrdata()
         {
             if (newclient != null && newclient.getflag == 1)
@@ -84,10 +114,21 @@ namespace multithreadservTest
             else
                 return null;
         }
+        
         public void setgetflag(int flag)
         {
             if(newclient!=null)
             newclient.getflag = flag;
+        }
+        public void Dispose()
+        {
+            if(thread != null)
+                thread.Abort();
+            if (newclient != null)
+                newclient.Dispose();
+            if (server != null)
+                server.Close();
+            
         }
     }
 
@@ -95,7 +136,7 @@ namespace multithreadservTest
     {
         public Socket service;
         public Imagedata imagedata;
-        public byte[] bytes;
+        public Byte[] bytes;
         public int imagesize;
     //    public int constatus = 0;//连接状态
         public int getflag = 0;
@@ -105,11 +146,14 @@ namespace multithreadservTest
             imagedata = new Imagedata(bytes, imagesize);
             service = clientsocket;   //service对象接管对消息的控制  
         }
-    /*    public void setgetflag(int flag)
+        public void Dispose()
         {
-            this.getflag = flag;
-        }*/
-
+            if (imagedata != null)
+                imagedata.Dispose();
+            if (service != null)
+                service.Close();
+            bytes = null;
+        }
         public void ClientService()
         {
             try
@@ -127,14 +171,11 @@ namespace multithreadservTest
                             imagesize = BitConverter.ToInt32(bytes, 0);  // the size of frame
                             Thread.Sleep(5);
                             service.Receive(bytes, imagesize, SocketFlags.None);// the frame
-                        //    MessageBox.Show(bytes[0].ToString()+" "+bytes[1].ToString()+" "+bytes[2].ToString());
+                            MessageBox.Show(bytes[0].ToString()+" "+bytes[1].ToString()+" "+bytes[2].ToString());
 
                             imagedata.bytes = bytes;
                             imagedata.imagesize = imagesize;
                             getflag = 1;
-                        }
-                        else
-                        {
                         }
                     }
                    // Thread.Sleep(10);
@@ -142,7 +183,7 @@ namespace multithreadservTest
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + "\n" + ex.StackTrace);
+                MessageBox.Show(ex.Message + ex.StackTrace);
             }
             service.Close();  //关闭套接字 
         }
@@ -158,6 +199,9 @@ namespace multithreadservTest
             this.bytes = bytes;
             this.imagesize = imagesize;
         }
+        public void Dispose()
+        {
+            bytes = null;
+        }
     }
-
 }

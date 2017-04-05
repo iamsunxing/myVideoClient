@@ -17,8 +17,8 @@ namespace tmp
     {
         public Thread myThread=null;
         public SocketCom sc = null;
-         public string host = "192.168.1.103";//寝室时
-      //  public string host = "192.168.1.2"; //曾宪梓楼时
+      //   public string host = "192.168.1.103";//寝室时
+        public string host = "192.168.1.2"; //曾宪梓楼时
         //public string host = "127.0.0.1";   //
         public int port = 10001;
         public Image im;
@@ -30,11 +30,11 @@ namespace tmp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            myThread = new Thread(new ThreadStart(RunsOnWorkerThread));
+            myThread = new Thread(new ThreadStart(WorkerThread));
             myThread.Start(); 
         }
 
-        private void RunsOnWorkerThread()
+        private void WorkerThread()
         {
          //   int i = 0;
             sc = new SocketCom(host,port);
@@ -63,6 +63,7 @@ namespace tmp
                
             }
         }
+        
         public void ShowProgress(Byte[] msg, int imagesize)
         {
             System.EventArgs e = new MyProgressEvents(msg, imagesize);
@@ -70,7 +71,9 @@ namespace tmp
 
             BeginInvoke(new MyProgressEventsHandler(UpdateUI), pList);
         }
+       
         private delegate void MyProgressEventsHandler(object sender, MyProgressEvents e);
+       
         private void UpdateUI(object sender, MyProgressEvents e)
         {
             if (null == e.Msg) return;
@@ -88,6 +91,7 @@ namespace tmp
                 //  MessageBox.Show(ex.Message + "\n" + ex.StackTrace);
             }  
         }
+       
         public void BytesToImage(Byte[] buffer, int imagesize)
         {
             if ((buffer == null) || (imagesize <= 0)) return ;
@@ -115,6 +119,7 @@ namespace tmp
                 this.richTextBox1.Text = ex.Message + ex.StackTrace;
             }
         }
+        
         public class MyProgressEvents : EventArgs
         {
             public Byte[] Msg=null;
@@ -123,6 +128,16 @@ namespace tmp
             {
                 Msg = msg;
                 imagesize = per;
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(sc != null)
+                sc.Dispose();
+            if (myThread != null)
+            {
+                myThread.Abort();
             }
         }
     }
